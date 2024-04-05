@@ -103,7 +103,7 @@ class Player extends SpriteComponent
       //   ),
       // );
 
-      _health -= 10;
+      _health -= 25;
       if (_health <= 0) {
         _health = 0;
       }
@@ -229,6 +229,14 @@ class Player extends SpriteComponent
         bullet.direction.rotate(i * pi / 6);
         game.world.add(bullet);
       }
+    }
+  }
+
+  //decrease health by given amount
+  void decreaseHealthBy(int points) {
+    _health -= points;
+    if (_health <= 0) {
+      _health = 0;
     }
   }
 

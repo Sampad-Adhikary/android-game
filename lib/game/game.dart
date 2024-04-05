@@ -49,6 +49,8 @@ class SpacescapeGame extends FlameGame
   // Displays player helth on top right.
   late TextComponent _playerHealth;
 
+  late RectangleComponent _rectangleBar;
+
   late AudioPlayerComponent _audioPlayerComponent;
 
   // List of commands to be processed in current update.
@@ -89,7 +91,7 @@ class SpacescapeGame extends FlameGame
       // Create a basic joystick component on left.
       final joystick = JoystickComponent(
         anchor: Anchor.bottomLeft,
-        position: Vector2(30, fixedResolution.y - 30),
+        position: Vector2(30, fixedResolution.y - 230),
         // size: 100,
         background: CircleComponent(
           radius: 60,
@@ -125,7 +127,7 @@ class SpacescapeGame extends FlameGame
         joystick: joystick,
         spaceshipType: spaceshipType,
         sprite: spriteSheet.getSpriteById(spaceship.spriteId),
-        size: Vector2(64, 64),
+        size: Vector2(84, 84),
         position: fixedResolution / 2,
       );
 
@@ -142,7 +144,7 @@ class SpacescapeGame extends FlameGame
           paint: Paint()..color = Colors.white.withOpacity(0.5),
         ),
         anchor: Anchor.bottomRight,
-        position: Vector2(fixedResolution.x - 30, fixedResolution.y - 30),
+        position: Vector2(fixedResolution.x - 30, fixedResolution.y - 130),
         onPressed: _player.joystickAction,
       );
 
@@ -175,6 +177,12 @@ class SpacescapeGame extends FlameGame
       // Anchor to top right as we want the top right
       // corner of this component to be at a specific position.
       _playerHealth.anchor = Anchor.topRight;
+      final rectangleBar = RectangleComponent(
+        size: Vector2(fixedResolution.x, 100),
+        position: Vector2(0, fixedResolution.y - 100),
+        paint: Paint()..color = Colors.grey.withOpacity(0.5),
+      );
+      await world.add(rectangleBar);
 
       // Add the blue bar indicating health.
       final healthBar = HealthBar(

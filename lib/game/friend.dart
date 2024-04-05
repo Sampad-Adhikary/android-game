@@ -12,33 +12,33 @@ import 'player.dart';
 import 'command.dart';
 import 'audio_player_component.dart';
 
-import '../models/enemy_data.dart';
+import '../models/friend_data.dart';
 
-// This class represent an enemy component.
-class Enemy extends SpriteComponent
+// This class represent an friend component.
+class Friend extends SpriteComponent
     with CollisionCallbacks, HasGameReference<SpacescapeGame> {
-  // The speed of this enemy.
+  // The speed of this Friend.
   double _speed = 250;
 
-  // This direction in which this Enemy will move.
+  // This direction in which this Friend will move.
   // Defaults to vertically downwards.
   Vector2 moveDirection = Vector2(0, 1);
 
-  // Controls for how long enemy should be frozen.
+  // Controls for how long Friend should be frozen.
   late Timer _freezeTimer;
 
   // Holds an object of Random class to generate random numbers.
   final _random = Random();
 
-  // The data required to create this enemy.
-  final EnemyData enemyData;
+  // The data required to create this Friend.
+  final FriendData friendData;
 
-  // Represents health of this enemy.
-  int _hitPoints = 25;
+  // Represents health of this friend.
+  int _hitPoints = 0;
 
   // To display health in game world.
   final _hpText = TextComponent(
-    text: 'password',
+    text: '10 HP',
     textRenderer: TextPaint(
       style: const TextStyle(
         color: Colors.white,
@@ -65,7 +65,7 @@ class Enemy extends SpriteComponent
 
   //   // Calculate the position of the vector below the text vertically and at the center horizontally
   //   double vectorX =
-  //       textCenterX - 250 / 2; // Adjust 250 according to your vector width
+  //       textCenterX - 100; // Adjust 250 according to your vector width
   //   double vectorY = textPosition.y + _hpText.height;
   //   return Vector2(vectorX, vectorY);
   // }
@@ -76,46 +76,44 @@ class Enemy extends SpriteComponent
   }
 
   List<String> badPasswords = [
-    'rootuser',
-    'mondayyy',
-    'qwertyke',
-    'administ',
-    'letmeing',
-    'user1234',
-    'monkeyyq',
-    '12345688',
-    'password',
-    '12345678',
+    'P@1sword',
+    'Secur#2!',
+    'StrngP@1',
+    'Admin#12',
+    'LetMe1n!',
+    'User@123',
+    'Monkey#1',
+    '12Av@567',
+    'P@s^word',
+    '1#@bCdEf',
   ];
 
-  Enemy({
+  Friend({
     required Sprite? sprite,
-    required this.enemyData,
+    required this.friendData,
     required Vector2? position,
     required Vector2? size,
   }) : super(sprite: sprite, position: position, size: size) {
-    // Rotates the enemy component by 180 degrees. This is needed because
+    // Rotates the Friend component by 180 degrees. This is needed because
     // all the sprites initially face the same direct, but we want enemies to be
     // moving in opposite direction.
     angle = pi;
 
-    // Set the current speed from enemyData.
-    _speed = enemyData.speed;
+    // Set the current speed from FriendData.
+    _speed = friendData.speed;
 
-    // Set hitpoint to correct value from enemyData.
-    _hitPoints = ((enemyData.level / 4) * 100) as int;
-    // print(_hitPoints);
-
+    // Set hitpoint to correct value from FriendData.
+    _hitPoints = friendData.level * 10;
     _hpText.text = badPasswords[_random.nextInt(badPasswords.length)];
     // print(_hpText.text);
 
     // Sets freeze time to 2 seconds. After 2 seconds speed will be reset.
     _freezeTimer = Timer(2, onTick: () {
-      _speed = enemyData.speed;
+      _speed = friendData.speed;
     });
 
-    // If this enemy can move horizontally, randomize the move direction.
-    if (enemyData.hMove) {
+    // If this friend can move horizontally, randomize the move direction.
+    if (friendData.hMove) {
       moveDirection = getRandomDirection();
     }
   }
@@ -141,7 +139,7 @@ class Enemy extends SpriteComponent
 
     _hpText.text = badPasswords[_random.nextInt(badPasswords.length)];
 
-    // To place the text just behind the enemy.
+    // To place the text just behind the friend.
     _hpText.position = Vector2(70, 80);
 
     // Add as child of current component.
@@ -156,21 +154,15 @@ class Enemy extends SpriteComponent
       // If the other Collidable is a Bullet,
       // reduce health by level of bullet times 10.
       _hitPoints -= other.level * 10;
-      // int hitPoints = ((other.level / 4) * 10) as int;
-      // final command = Command<Player>(action: (player) {
-      //   // Use the correct killPoint to increase player's score.
-      //   player.decreaseHealthBy(hitPoints);
-      // });
-      // game.addCommand(command);
     } else if (other is Player) {
       // If the other Collidable is Player, destroy.
       destroy();
     }
   }
 
-  // This method will destroy this enemy.
+  // This method will destroy this friend.
   void destroy() {
-    // Ask audio player to play enemy destroy effect.
+    // Ask audio player to play friend destroy effect.
     game.addCommand(Command<AudioPlayerComponent>(action: (audioPlayer) {
       audioPlayer.playSfx('laser1.ogg');
     }));
@@ -181,12 +173,12 @@ class Enemy extends SpriteComponent
     // player's score by 1.
     // final command = Command<Player>(action: (player) {
     //   // Use the correct killPoint to increase player's score.
-    //   player.addToScore(enemyData.killPoint);
+    //   player.addToScore(friendData.killPoint);
     // });
     // game.addCommand(command);
 
     // Generate 20 white circle particles with random speed and acceleration,
-    // at current position of this enemy. Each particles lives for exactly
+    // at current position of this friend. Each particles lives for exactly
     // 0.1 seconds and will get removed from the game world after that.
     final particleComponent = ParticleSystemComponent(
       particle: Particle.generate(
@@ -215,53 +207,32 @@ class Enemy extends SpriteComponent
     // _hpText.text = '$_hitPoints HP'; // Add Password Here
 
     // If hitPoints have reduced to zero,
-    // destroy this enemy.
+    // destroy this friend.
     if (_hitPoints <= 0) {
       destroy();
     }
 
     _freezeTimer.update(dt);
 
-    // Update the position of this enemy using its speed and delta time.
+    // Update the position of this friend using its speed and delta time.
     position += moveDirection * _speed * dt;
 
-    // If the enemy leaves the screen, destroy it.
-    if (position.y > game.fixedResolution.y - 100) {
-      removeFromParent();
+    // If the friend leaves the screen, destroy it.
+    if (position.y > game.fixedResolution.y) {
       final command = Command<Player>(action: (player) {
         // Use the correct killPoint to increase player's score.
-        int decreaseScore = ((enemyData.level / 4) * 100) as int;
-        player.decreaseHealthBy(decreaseScore);
+        player.addToScore(friendData.killPoint);
       });
       game.addCommand(command);
-      final particleComponent = ParticleSystemComponent(
-        particle: Particle.generate(
-          count: 15,
-          lifespan: 0.3,
-          generator: (i) => AcceleratedParticle(
-            acceleration: getRandomVector(),
-            speed: getRandomVector(),
-            position: position.clone(),
-            child: CircleParticle(
-              radius: 3,
-              paint: Paint()..color = Colors.white,
-            ),
-          ),
-        ),
-      );
-
-      game.addCommand(Command<AudioPlayerComponent>(action: (audioPlayer) {
-        audioPlayer.playSfx('laser1.ogg');
-      }));
-      game.world.add(particleComponent);
+      removeFromParent();
     } else if ((position.x < size.x / 2) ||
         (position.x > (game.fixedResolution.x - size.x / 2))) {
-      // Enemy is going outside vertical screen bounds, flip its x direction.
+      // friend is going outside vertical screen bounds, flip its x direction.
       moveDirection.x *= -1;
     }
   }
 
-  // Pauses enemy for 2 seconds when called.
+  // Pauses friend for 2 seconds when called.
   void freeze() {
     _speed = 0;
     _freezeTimer.stop();

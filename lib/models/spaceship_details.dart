@@ -48,8 +48,8 @@ class Spaceship {
       name: 'Canary',
       cost: 0,
       speed: 250,
-      spriteId: 0,
-      assetPath: 'assets/images/ship_A.png',
+      spriteId: 7,
+      assetPath: 'assets/images/ship_H.png',
       level: 1,
     ),
     SpaceshipType.dusky: Spaceship(
@@ -57,7 +57,7 @@ class Spaceship {
       cost: 100,
       speed: 400,
       spriteId: 1,
-      assetPath: 'assets/images/ship_B.png',
+      assetPath: 'assets/images/ship_A.png',
       level: 2,
     ),
     SpaceshipType.condor: Spaceship(
