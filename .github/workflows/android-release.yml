@@ -29,4 +29,4 @@ jobs:
         run: flutter pub get
 
       - name: Start release build
-        run: flutter build appbundle
+        run: flutter build apk
