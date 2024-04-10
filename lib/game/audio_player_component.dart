@@ -13,12 +13,8 @@ class AudioPlayerComponent extends Component
   Future<void>? onLoad() async {
     FlameAudio.bgm.initialize();
 
-    await FlameAudio.audioCache.loadAll([
-      'laser1.ogg',
-      'powerUp6.ogg',
-      'laserSmall_001.ogg',
-      '9. Space Invaders.wav'
-    ]);
+    await FlameAudio.audioCache
+        .loadAll(['laser1.ogg', 'powerUp6.ogg', 'laserSmall_001.ogg']);
 
     try {
       await FlameAudio.audioCache.load(
