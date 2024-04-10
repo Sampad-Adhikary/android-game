@@ -91,7 +91,7 @@ class SpacescapeGame extends FlameGame
       // Create a basic joystick component on left.
       final joystick = JoystickComponent(
         anchor: Anchor.bottomLeft,
-        position: Vector2(30, fixedResolution.y - 230),
+        position: Vector2(30, fixedResolution.y - 330),
         // size: 100,
         background: CircleComponent(
           radius: 60,
