@@ -103,7 +103,8 @@ class Enemy extends SpriteComponent
     _speed = enemyData.speed;
 
     // Set hitpoint to correct value from enemyData.
-    _hitPoints = ((enemyData.level / 4) * 100) as int;
+    // _hitPoints = ((enemyData.level / 4) * 100) as int;
+    _hitPoints = ((enemyData.level / 4) * 100).round();
     // print(_hitPoints);
 
     _hpText.text = badPasswords[_random.nextInt(badPasswords.length)];
@@ -230,7 +231,7 @@ class Enemy extends SpriteComponent
       removeFromParent();
       final command = Command<Player>(action: (player) {
         // Use the correct killPoint to increase player's score.
-        int decreaseScore = ((enemyData.level / 4) * 100) as int;
+        int decreaseScore = ((enemyData.level / 4) * 100).round();
         player.decreaseHealthBy(decreaseScore);
       });
       game.addCommand(command);
