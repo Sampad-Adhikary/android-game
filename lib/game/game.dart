@@ -49,8 +49,6 @@ class SpacescapeGame extends FlameGame
   // Displays player helth on top right.
   late TextComponent _playerHealth;
 
-  late RectangleComponent _rectangleBar;
-
   late AudioPlayerComponent _audioPlayerComponent;
 
   // List of commands to be processed in current update.
@@ -63,7 +61,7 @@ class SpacescapeGame extends FlameGame
   bool _isAlreadyLoaded = false;
 
   // Returns the size of the playable area of the game window.
-  Vector2 fixedResolution = Vector2(540, 960);
+  Vector2 fixedResolution = Vector2(600, 1139);
 
   // This method gets called by Flame before the game-loop begins.
   // Assets loading and adding component should be done here.
@@ -91,7 +89,7 @@ class SpacescapeGame extends FlameGame
       // Create a basic joystick component on left.
       final joystick = JoystickComponent(
         anchor: Anchor.bottomLeft,
-        position: Vector2(30, fixedResolution.y - 330),
+        position: Vector2(30, fixedResolution.y - 430),
         // size: 100,
         background: CircleComponent(
           radius: 60,
