@@ -8,7 +8,6 @@ import '../widgets/overlays/pause_menu.dart';
 
 // Creating this as a file private object so as to
 // avoid unwanted rebuilds of the whole game object.
-SpacescapeGame _spacescapeGame = SpacescapeGame();
 
 // This class represents the actual game screen
 // where all the action happens.
@@ -17,6 +16,10 @@ class GamePlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final deviceSize = MediaQuery.of(context).size;
+    final double height = deviceSize.height;
+    final double width = deviceSize.width;
+    SpacescapeGame _spacescapeGame = SpacescapeGame(width, height);
     return Scaffold(
       // WillPopScope provides us a way to decide if
       // this widget should be poped or not when user

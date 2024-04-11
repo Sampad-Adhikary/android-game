@@ -26,6 +26,17 @@ import 'audio_player_component.dart';
 // This class is responsible for initializing and running the game-loop.
 class SpacescapeGame extends FlameGame
     with HasCollisionDetection, HasKeyboardHandlerComponents {
+  final double deviceWidth;
+  final double deviceHeight;
+
+  // Returns the size of the playable area of the game window.
+  Vector2 fixedResolution = Vector2(0, 0);
+
+  SpacescapeGame(this.deviceWidth, this.deviceHeight) {
+    fixedResolution = Vector2(deviceWidth, deviceHeight);
+  }
+
+  // SpacescapeGame(this.deviceWidth, this.deviceHeight);
   // The whole game world.
   final World world = World();
 
@@ -60,9 +71,6 @@ class SpacescapeGame extends FlameGame
   // Indicates weather the game world has been already initialized.
   bool _isAlreadyLoaded = false;
 
-  // Returns the size of the playable area of the game window.
-  Vector2 fixedResolution = Vector2(600, 1139);
-
   // This method gets called by Flame before the game-loop begins.
   // Assets loading and adding component should be done here.
   @override
@@ -89,7 +97,7 @@ class SpacescapeGame extends FlameGame
       // Create a basic joystick component on left.
       final joystick = JoystickComponent(
         anchor: Anchor.bottomLeft,
-        position: Vector2(30, fixedResolution.y - 430),
+        position: Vector2(30, fixedResolution.y - 130),
         // size: 100,
         background: CircleComponent(
           radius: 60,
